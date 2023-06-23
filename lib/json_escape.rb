@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "json_escape/version"
-require_relative "json_escape/json_escape"
 
 module JsonEscape
-  class Error < StandardError; end
-
   module Pure
     JSON_ESCAPE = { "&" => '\u0026', ">" => '\u003e', "<" => '\u003c', "\u2028" => '\u2028', "\u2029" => '\u2029' }
     JSON_ESCAPE_REGEXP = /[\u2028\u2029&><]/u
@@ -17,7 +14,11 @@ module JsonEscape
     module_function :json_escape
   end
 
-  #include Pure
+  begin
+    require_relative "json_escape/json_escape"
+  rescue LoadError
+    include Pure
+  end
 
   module_function :json_escape
 end

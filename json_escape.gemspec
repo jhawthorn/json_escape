@@ -31,4 +31,6 @@ Gem::Specification.new do |spec|
   spec.extensions = ["ext/json_escape/extconf.rb"]
 
   spec.add_development_dependency "rake-compiler"
+  spec.add_development_dependency "minitest"
+  spec.add_development_dependency "json"
 end

@@ -42,4 +42,12 @@ class TestJsonEscape < Minitest::Test
       assert_equal json_escape(raw), json_escape(json_escape(raw))
     end
   end
+
+  def test_long_strings
+    [1, 2, 255, 256, 2**8, 2**16].each do |size|
+      str = "\"#{?& * size}\""
+      escaped = json_escape(str)
+      assert_equal size * 6 + 2, escaped.size
+    end
+  end
 end

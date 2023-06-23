@@ -1,24 +1,14 @@
 # JsonEscape
 
-TODO: Delete this and the text below, and describe your gem
+This is a proof of concept for implementing ActiveSupport's `escape_json` in C
+(and a pure-Ruby implemntation for platforms other than CRuby).
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/json_escape`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
-Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+This is to test, benchmark, and prove it's utility. I think this should be
+upstreamed into another library.
 
 ## Usage
 
-TODO: Write usage instructions here
+Don't.
 
 ## Development
 

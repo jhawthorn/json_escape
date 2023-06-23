@@ -10,6 +10,9 @@ Rake::TestTask.new(:test) do |t|
 end
 
 if RUBY_ENGINE == "jruby"
+  task :clobber # noop
+  task :compile # noop
+
   task default: %i[test]
 else
   require "rake/extensiontask"

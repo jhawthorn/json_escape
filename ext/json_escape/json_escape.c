@@ -40,9 +40,9 @@ escape_json(VALUE self, VALUE str)
 #define JSON_ESCAPE_CONCAT(s) do { \
     memcpy(dest, ("\\u" s), strlen(s) + 2); \
     dest += strlen(s) + 2; \
-} while (false)
+} while (0)
 
-        if (false) {
+        if (0) {
         }
         else if (c == '&') {
             JSON_ESCAPE_CONCAT("0026");

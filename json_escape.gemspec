@@ -28,7 +28,12 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.extensions = ["ext/json_escape/extconf.rb"]
+
+  if RUBY_ENGINE == 'jruby'
+    spec.platform = 'java'
+  else
+    spec.extensions = ["ext/json_escape/extconf.rb"]
+  end
 
   spec.add_development_dependency "rake-compiler"
   spec.add_development_dependency "minitest"

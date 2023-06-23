@@ -9,12 +9,14 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList["test/**/test_*.rb"]
 end
 
-require "rake/extensiontask"
+if RUBY_ENGINE == "jruby"
+  task default: %i[test]
+else
+  require "rake/extensiontask"
 
-task build: :compile
+  Rake::ExtensionTask.new("json_escape") do |ext|
+    ext.lib_dir = "lib/json_escape"
+  end
 
-Rake::ExtensionTask.new("json_escape") do |ext|
-  ext.lib_dir = "lib/json_escape"
+  task default: %i[clobber compile test]
 end
-
-task default: %i[clobber compile test]

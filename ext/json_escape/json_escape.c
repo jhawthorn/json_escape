@@ -39,8 +39,12 @@ escape_json(VALUE self, VALUE str)
 
     VALUE vbuf;
     char *buf = ALLOCV_N(char, vbuf, json_escaped_length(str));
-
     char *dest = buf;
+
+    memcpy(dest, cstr, initial_match);
+    cstr += initial_match;
+    dest += initial_match;
+
     while (cstr < end) {
         const char c = *cstr++;
 
@@ -71,6 +75,12 @@ escape_json(VALUE self, VALUE str)
         else {
             *dest++ = c;
         }
+
+        initial_match = strcspn(cstr, "&<>\xe2");
+        memcpy(dest, cstr, initial_match);
+        cstr += initial_match;
+        dest += initial_match;
+
 #undef JSON_ESCAPE_CONCAT
     }
 

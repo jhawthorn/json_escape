@@ -28,10 +28,17 @@ escape_json(VALUE self, VALUE str)
         rb_raise(rb_eEncCompatError, "input string must be ASCII-compatible");
     }
 
+    const char *cstr = RSTRING_PTR(str);
+    const unsigned long str_len = RSTRING_LEN(str);
+    const char *end = cstr + RSTRING_LEN(str);
+
+    size_t initial_match = strcspn(cstr, "&<>\xe2");
+    if (initial_match == str_len) {
+        return str;
+    }
+
     VALUE vbuf;
     char *buf = ALLOCV_N(char, vbuf, json_escaped_length(str));
-    const char *cstr = RSTRING_PTR(str);
-    const char *end = cstr + RSTRING_LEN(str);
 
     char *dest = buf;
     while (cstr < end) {

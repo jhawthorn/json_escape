@@ -37,8 +37,9 @@ escape_json(VALUE self, VALUE str)
         return str;
     }
 
-    VALUE vbuf;
-    char *buf = ALLOCV_N(char, vbuf, json_escaped_length(str));
+    VALUE escaped = rb_str_buf_new(json_escaped_length(str));
+    rb_str_resize(escaped, json_escaped_length(str));
+    char *buf = RSTRING_PTR(escaped);
     char *dest = buf;
 
     memcpy(dest, cstr, initial_match);
@@ -84,12 +85,9 @@ escape_json(VALUE self, VALUE str)
 #undef JSON_ESCAPE_CONCAT
     }
 
-    VALUE escaped = str;
-    if (RSTRING_LEN(str) < (dest - buf)) {
-        escaped = rb_str_new(buf, dest - buf);
-        rb_enc_associate(escaped, rb_enc_get(str));
-    }
-    ALLOCV_END(vbuf);
+    rb_str_resize(escaped, dest - buf);
+    rb_enc_associate(escaped, rb_enc_get(str));
+
     return escaped;
 }
 

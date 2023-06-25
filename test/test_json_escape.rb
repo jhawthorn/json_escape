@@ -3,13 +3,7 @@
 require "test_helper"
 require "json"
 
-class TestJsonEscape < Minitest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::JsonEscape::VERSION
-  end
-
-  include JsonEscape
-
+module JsonEscapeTestCases
   JSON_ESCAPE_TEST_CASES = [
     ["1", "1"],
     ["null", "null"],
@@ -50,4 +44,27 @@ class TestJsonEscape < Minitest::Test
       assert_equal size * 6 + 2, escaped.size
     end
   end
+
+  def test_incompatible_encodings
+    JSON_ESCAPE_TEST_CASES.each do |(raw, _)|
+      ex = assert_raises Encoding::CompatibilityError do
+        json_escape(raw.b)
+      end
+      assert_equal "input string must be UTF-8 or ASCII", ex.message
+    end
+  end
+end
+
+class TestJsonEscape < Minitest::Test
+  def test_that_it_has_a_version_number
+    refute_nil ::JsonEscape::VERSION
+  end
+
+  include JsonEscape
+  include JsonEscapeTestCases
+end
+
+class TestJsonEscapePure < Minitest::Test
+  include JsonEscape::Pure
+  include JsonEscapeTestCases
 end

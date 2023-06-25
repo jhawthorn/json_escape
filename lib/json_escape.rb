@@ -9,7 +9,11 @@ module JsonEscape
     private_constant :JSON_ESCAPE, :JSON_ESCAPE_REGEXP
 
     def json_escape(json)
-      json.to_s.gsub(JSON_ESCAPE_REGEXP, JSON_ESCAPE)
+      json = json.to_s
+      if json.encoding != Encoding::UTF_8 && json.encoding != Encoding::ASCII
+        raise Encoding::CompatibilityError, "input string must be UTF-8 or ASCII"
+      end
+      json.gsub(JSON_ESCAPE_REGEXP, JSON_ESCAPE)
     end
     module_function :json_escape
   end

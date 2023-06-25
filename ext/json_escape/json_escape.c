@@ -23,9 +23,9 @@ escape_json(VALUE self, VALUE str)
         str = rb_convert_type(str, T_STRING, "String", "to_s");
     }
 
-    if (!rb_enc_str_asciicompat_p(str)) {
-        // FIXME: check for usascii or utf8
-        rb_raise(rb_eEncCompatError, "input string must be ASCII-compatible");
+    rb_encoding *enc = rb_enc_get(str);
+    if (enc != rb_utf8_encoding() && enc != rb_usascii_encoding()) {
+        rb_raise(rb_eEncCompatError, "input string must be UTF-8 or ASCII");
     }
 
     const char *cstr = RSTRING_PTR(str);

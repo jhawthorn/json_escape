@@ -19,7 +19,7 @@ module JsonEscape
   end
 
   begin
-    require_relative "json_escape/json_escape"
+    require "json_escape/json_escape"
   rescue LoadError
     include Pure
   end
